@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1"
+>
+
+<title>Semana de Libertação e Batalha Espiritual</title>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: #050505;
+  overflow: hidden;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   TELA 16:9
+========================= */
+
+#tela {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+
+  background: #050505;
+}
+
+/* =========================
+   IMAGEM DE FUNDO
+========================= */
+
+#fundo {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  z-index: 0;
+}
+
+/* SOMBRA PARA MELHORAR LEITURA */
+
+#sombra {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0,0,0,.10) 0%,
+      rgba(0,0,0,.30) 55%,
+      rgba(0,0,0,.65) 100%
+    );
+
+  pointer-events: none;
+}
+
+/* =========================
+   TITULO
+========================= */
+
+#titulo {
+  position: absolute;
+
+  top: 5%;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 95%;
+
+  text-align: center;
+
+  z-index: 5;
+}
+
+#semana {
+  color: #ffffff;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(20px, 2vw, 42px);
+
+  font-weight: 600;
+
+  letter-spacing: .30em;
+
+  text-shadow:
+    0 3px 5px #000,
+    0 0 12px #000;
+}
+
+#tituloPrincipal {
+  margin-top: 5px;
+
+  color: #ffffff;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(38px, 4.5vw, 90px);
+
+  font-weight: 900;
+
+  line-height: .95;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    0 2px 0 #ff3028,
+    0 5px 0 #650000,
+    0 8px 14px #000,
+    0 0 20px rgba(255,0,0,.45);
+}
+
+/* =========================
+   PAINEL CONTAGEM
+========================= */
+
+#painelContagem {
+  position: absolute;
+
+  left: 50%;
+  top: 55%;
+
+  transform: translate(-50%, -50%);
+
+  width: min(78vw, 1200px);
+
+  padding: 18px 25px 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(60,4,4,.92),
+      rgba(5,5,7,.96)
+    );
+
+  border: 2px solid #ff3028;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 0 15px rgba(255,0,0,.70),
+    0 0 45px rgba(255,0,0,.20);
+
+  z-index: 5;
+}
+
+#faltam {
+  margin-bottom: 13px;
+
+  color: #ffffff;
+
+  text-align: center;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(25px, 2.5vw, 50px);
+
+  font-weight: 900;
+
+  letter-spacing: .25em;
+
+  text-shadow:
+    0 4px 7px #000;
+}
+
+#tempo {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 14px;
+}
+
+.caixa {
+  padding: 16px 8px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(70,5,5,.96),
+      rgba(6,6,8,.97)
+    );
+
+  border: 2px solid #ff3028;
+
+  border-radius: 16px;
+
+  box-shadow:
+    inset 0 0 20px rgba(255,0,0,.10),
+    0 0 10px rgba(255,0,0,.20);
+}
+
+.numero {
+  color: #ffffff;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(45px, 5.5vw, 105px);
+
+  font-weight: 900;
+
+  line-height: .90;
+
+  font-variant-numeric: tabular-nums;
+
+  text-shadow:
+    0 4px 0 #650000,
+    0 0 15px rgba(255,0,0,.45);
+}
+
+.caixa:first-child .numero {
+  color: #ff3028;
+}
+
+.rotulo {
+  margin-top: 10px;
+
+  color: #ffffff;
+
+  font-size: clamp(11px, 1.1vw, 21px);
+
+  font-weight: 900;
+
+  letter-spacing: .08em;
+}
+
+/* =========================
+   DIA DO EVENTO
+========================= */
+
+#diaEvento {
+  display: none;
+
+  position: absolute;
+
+  left: 50%;
+  top: 55%;
+
+  transform: translate(-50%, -50%);
+
+  width: min(65vw, 1000px);
+
+  padding: 35px 20px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(65,4,4,.94),
+      rgba(5,5,7,.97)
+    );
+
+  border: 3px solid #ff3028;
+
+  border-radius: 25px;
+
+  box-shadow:
+    0 0 40px rgba(255,0,0,.40);
+
+  z-index: 6;
+}
+
+#numeroDia {
+  display: inline-block;
+
+  color: #ff3028;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(90px, 12vw, 220px);
+
+  font-weight: 900;
+
+  line-height: .8;
+
+  text-shadow:
+    0 6px 0 #650000,
+    0 0 25px rgba(255,0,0,.50);
+}
+
+#palavraDia {
+  display: inline-block;
+
+  margin-left: 25px;
+
+  color: #ffffff;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(60px, 8vw, 150px);
+
+  font-weight: 900;
+
+  text-shadow:
+    0 5px 0 #650000,
+    0 8px 15px #000;
+}
+
+/* =========================
+   ENCERRADO
+========================= */
+
+#encerrado {
+  display: none;
+
+  position: absolute;
+
+  left: 50%;
+  top: 55%;
+
+  transform: translate(-50%, -50%);
+
+  width: min(65vw, 1000px);
+
+  padding: 45px 20px;
+
+  text-align: center;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(60,4,4,.95),
+      rgba(5,5,7,.97)
+    );
+
+  border: 3px solid #ff3028;
+
+  border-radius: 25px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(50px, 7vw, 130px);
+
+  font-weight: 900;
+
+  line-height: .95;
+
+  box-shadow:
+    0 0 40px rgba(255,0,0,.40);
+
+  z-index: 6;
+}
+
+/* =========================
+   RODAPE
+========================= */
+
+#rodape {
+  position: absolute;
+
+  left: 50%;
+  bottom: 4%;
+
+  transform: translateX(-50%);
+
+  width: 90%;
+
+  text-align: center;
+
+  z-index: 5;
+}
+
+#convite {
+  margin-bottom: 12px;
+
+  color: #ffffff;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(20px, 2.3vw, 45px);
+
+  font-weight: 900;
+
+  letter-spacing: .13em;
+
+  text-shadow:
+    0 3px 0 #76110e,
+    0 5px 8px #000;
+}
+
+#data {
+  display: inline-block;
+
+  padding: 10px 35px;
+
+  color: #ffffff;
+
+  background: rgba(5,5,7,.88);
+
+  border: 2px solid #ff3028;
+
+  border-radius: 12px;
+
+  font-size: clamp(14px, 1.5vw, 28px);
+
+  font-weight: 900;
+
+  letter-spacing: .05em;
+
+  box-shadow:
+    0 0 15px rgba(255,0,0,.30);
+}
+
+/* TELAS MAIS BAIXAS */
+
+@media (max-height: 600px) {
+
+  #titulo {
+    top: 2%;
+  }
+
+  #painelContagem,
+  #diaEvento,
+  #encerrado {
+    top: 53%;
+  }
+
+  #rodape {
+    bottom: 2%;
+  }
+
+  #painelContagem {
+    padding-top: 10px;
+    padding-bottom: 12px;
+  }
+
+  .caixa {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="tela">
+
+  <img
+    id="fundo"
+    src="fundo.png"
+    alt=""
+  >
+
+  <div id="sombra"></div>
+
+
+  <div id="titulo">
+
+    <div id="semana">
+      SEMANA DE
+    </div>
+
+    <div id="tituloPrincipal">
+      LIBERTAÇÃO &amp; BATALHA ESPIRITUAL
+    </div>
+
+  </div>
+
+
+  <div id="painelContagem">
+
+    <div id="faltam">
+      FALTAM
+    </div>
+
+    <div id="tempo">
+
+      <div class="caixa">
+
+        <div
+          id="dias"
+          class="numero"
+        >
+          00
+        </div>
+
+        <div class="rotulo">
+          DIAS
+        </div>
+
+      </div>
+
+
+      <div class="caixa">
+
+        <div
+          id="horas"
+          class="numero"
+        >
+          00
+        </div>
+
+        <div class="rotulo">
+          HORAS
+        </div>
+
+      </div>
+
+
+      <div class="caixa">
+
+        <div
+          id="minutos"
+          class="numero"
+        >
+          00
+        </div>
+
+        <div class="rotulo">
+          MINUTOS
+        </div>
+
+      </div>
+
+
+      <div class="caixa">
+
+        <div
+          id="segundos"
+          class="numero"
+        >
+          00
+        </div>
+
+        <div class="rotulo">
+          SEGUNDOS
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div id="diaEvento">
+
+    <div id="numeroDia">
+      1º
+    </div>
+
+    <div id="palavraDia">
+      DIA
+    </div>
+
+  </div>
+
+
+  <div id="encerrado">
+    SEMANA ENCERRADA
+  </div>
+
+
+  <div id="rodape">
+
+    <div id="convite">
+      VENHA FAZER PARTE
+    </div>
+
+    <div id="data">
+      📅 DE 26 DE OUTUBRO A 01 DE NOVEMBRO
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+var INICIO =
+  new Date("2026-10-26T00:00:00-03:00");
+
+var FINAL =
+  new Date("2026-11-02T00:00:00-03:00");
+
+var painel =
+  document.getElementById("painelContagem");
+
+var diaEvento =
+  document.getElementById("diaEvento");
+
+var encerrado =
+  document.getElementById("encerrado");
+
+var dias =
+  document.getElementById("dias");
+
+var horas =
+  document.getElementById("horas");
+
+var minutos =
+  document.getElementById("minutos");
+
+var segundos =
+  document.getElementById("segundos");
+
+var numeroDia =
+  document.getElementById("numeroDia");
+
+
+function zero(numero) {
+
+  if (numero < 10) {
+    return "0" + numero;
+  }
+
+  return String(numero);
+}
+
+
+function dataSaoPaulo() {
+
+  var formatador =
+    new Intl.DateTimeFormat(
+      "en-CA",
+      {
+        timeZone: "America/Sao_Paulo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }
+    );
+
+  var partes =
+    formatador.formatToParts(new Date());
+
+  var ano = "";
+  var mes = "";
+  var dia = "";
+
+  for (
+    var i = 0;
+    i < partes.length;
+    i++
+  ) {
+
+    if (partes[i].type === "year") {
+      ano = partes[i].value;
+    }
+
+    if (partes[i].type === "month") {
+      mes = partes[i].value;
+    }
+
+    if (partes[i].type === "day") {
+      dia = partes[i].value;
+    }
+
+  }
+
+  return ano + "-" + mes + "-" + dia;
+}
+
+
+function mostrarContagem(agora) {
+
+  painel.style.display = "block";
+  diaEvento.style.display = "none";
+  encerrado.style.display = "none";
+
+  var diferenca =
+    INICIO.getTime() -
+    agora.getTime();
+
+  if (diferenca < 0) {
+    diferenca = 0;
+  }
+
+  var total =
+    Math.floor(
+      diferenca / 1000
+    );
+
+  var d =
+    Math.floor(
+      total / 86400
+    );
+
+  var h =
+    Math.floor(
+      (total % 86400) / 3600
+    );
+
+  var m =
+    Math.floor(
+      (total % 3600) / 60
+    );
+
+  var s =
+    total % 60;
+
+  dias.textContent =
+    zero(d);
+
+  horas.textContent =
+    zero(h);
+
+  minutos.textContent =
+    zero(m);
+
+  segundos.textContent =
+    zero(s);
+}
+
+
+function mostrarDia() {
+
+  painel.style.display = "none";
+  diaEvento.style.display = "block";
+  encerrado.style.display = "none";
+
+  var hoje =
+    dataSaoPaulo();
+
+  var atual = "1º";
+
+  if (hoje === "2026-10-26") {
+    atual = "1º";
+  }
+
+  if (hoje === "2026-10-27") {
+    atual = "2º";
+  }
+
+  if (hoje === "2026-10-28") {
+    atual = "3º";
+  }
+
+  if (hoje === "2026-10-29") {
+    atual = "4º";
+  }
+
+  if (hoje === "2026-10-30") {
+    atual = "5º";
+  }
+
+  if (hoje === "2026-10-31") {
+    atual = "6º";
+  }
+
+  if (hoje === "2026-11-01") {
+    atual = "7º";
+  }
+
+  numeroDia.textContent =
+    atual;
+}
+
+
+function mostrarEncerrado() {
+
+  painel.style.display = "none";
+  diaEvento.style.display = "none";
+  encerrado.style.display = "block";
+}
+
+
+function atualizar() {
+
+  var agora =
+    new Date();
+
+  if (
+    agora.getTime() <
+    INICIO.getTime()
+  ) {
+
+    mostrarContagem(agora);
+
+    return;
+  }
+
+  if (
+    agora.getTime() <
+    FINAL.getTime()
+  ) {
+
+    mostrarDia();
+
+    return;
+  }
+
+  mostrarEncerrado();
+}
+
+
+atualizar();
+
+setInterval(
+  atualizar,
+  1000
+);
+
+</script>
+
+</body>
+</html>
